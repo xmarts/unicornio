@@ -1,0 +1,419 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="sale.report_saleorder">
+    <t t-foreach="docs" t-as="doc">
+        <div class="page">
+            <div class="oe_structure"/>
+             <t t-if="not o and doc">
+                    <t t-set="o" t-value="doc"/>
+                </t>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+                <!--;border-style:solid;border-width:1px;}-->
+              <style type="text/css">
+                  .boxC{ border: 1px solid black; border-radius: 10px;    padding: 0.80em 2em;}
+              </style>
+
+              <table style=" border:0px solid white; width:100%;">
+                <thead>
+                    <tr>
+
+                        <th rowspan="3" style="width:40%; ">
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height: 120px; width:90%; align:middle;"/>
+                        </th>
+                        <th style="width:60%; text-align:right;">
+<br/><br/>
+                            <table style="width:100%;" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style=" font-size:10pt;font-size:bold; font-weight:900; padding-left:5px;margin-left:25px; ">
+                                        <span t-if="doc.state not in ['draft','sent']">Pedido de Venta </span>
+                                        <span t-if="doc.state in ['draft','sent']">Cotizaciones </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                  <td style=" font-size:9pt; font-size:bold; font-weight:900;">
+                                   <b> DISTRIBUIDORA DE HERRAMIENTAS UNICORNIO S.A.P.I DE C.V.</b>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td style=" font-size:7pt;font-style:normal;font-weight:normal;">
+                                    <span> AV. WASHINGTON NO. 424-A, Col.RINCON DEL AGUA AZUL, GUADALAJARA, JALISCO CP. <span t-field="company.zip"/><br/>
+                                    Tels: (33) 3124-0255, (10 LINEAS) RFC:DHU-111123-EV6<br/>
+                                    VENTAS@DHU.MX </span>
+                                  </td>
+                                </tr>
+                            </table>
+                         
+                        </th>
+                    </tr>
+                </thead>
+              </table>
+
+              <table style="border:0px solid white; width:100%; height:20%; align:center;border-bottom:1px solid black; border-top:1px solid black; border-left:1px solid black;">
+             
+                    <tr>
+
+                        <td style="width:60%; height:20%; padding-left:5px;margin-left:5px;">
+                            <table style="width:100%;border:opx solid white;height:100%; " cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="padding-left:5px;margin-left:5px; width:100%; font-size:7pt;font-size:bold; font-weight:900;">
+                                        
+                                        <b>Cliente: </b>
+                                        <span style="font-size:7pt; font-style:normal;font-weight:normal;" t-field="doc.partner_id.ref"/>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td style="width:100%;font-size:7pt;padding-left:5px;margin-left:5px; ">
+                                         <b style=" font-size:7pt;font-size:bold; font-weight:900;"> Nombre:</b>
+                                        <span style="font-size:6pt;" t-field="doc.partner_id.name"/>
+                                    </td>
+                                   
+                                </tr>
+                                <tr>
+                                    <td>
+                                        <table style="border:0px solid white; width:100%;">
+                                            <tr>
+                                               <td style="width:10%; font-size:7pt;padding-left:5px;margin-left:5px; ">
+                                                    <b style="font-style:bold; font-weight:900;">Dirección: </b>
+                                               </td>
+                                                <td style=" width:40%; font-size:6pt;">
+                                                 
+                                                     <span t-field="doc.partner_id.street2"/>
+                                                        <span t-if="doc.partner_id.l10n_mx_street3"> No.Ext. <span t-field="doc.partner_id.l10n_mx_street3"/></span>
+                                                        <span t-if="doc.partner_id.l10n_mx_street4"> No.Int. <span t-field="doc.partner_id.l10n_mx_street4"/> </span><br/>
+
+                                                        <span t-if="doc.partner_id.street2">
+                                                        Col.<span t-field="doc.partner_id.l10n_mx_city2"/>
+                                                        </span>
+                                                            <span t-field="doc.partner_id.city"/> ,
+                                                            <span t-field="doc.partner_id.state_id.name"/>
+                                                         <span t-if="doc.partner_id.phone">
+                                                            Tel. <span t-field="doc.partner_id.phone"/>
+                                                         </span>
+                                                         <span t-if="doc.partner_id.fax">
+                                                            FAX <span t-field="doc.partner_id.fax"/>
+                                                         </span>
+                                                </td>
+                                                <td style=" font-size:6.5pt;width:15%;height:10%; border-left:1px solid black;padding-left:3px;margin-left:3px;">
+                                                 <b >RFC: </b> <br/>
+                                                  <b>Orden compra: </b>
+                                                </td>
+                                                  <td style="font-size:7pt;width:20%;height:10%;">
+                                                            <span t-field="doc.partner_id.rfc"/><br/>
+                                                            <span t-field="doc.nopurchase"/>
+
+                                                  </td>
+                                          </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                              
+                            </table>
+                        </td>
+                        <td style="width:30%;height:20%;padding-right:5px;margin-right:5px;">
+
+                            <table style="width:100%;border:1px solid black; height:100%; align:top;" cellspacing="0" cellpadding="0">
+                                <tr style="background-color:#3D3D3D; color:white;">
+                                    <td style=" padding-left:25px;margin-left:25px; font-size:7pt;font-size:bold; font-weight:900;">
+                                        <b>Documento </b>
+                                    </td>
+                                </tr>
+                                <tr><td>
+                                    <table style=" border:0px solid  white; width:100%;">
+                                        <tr>
+                                              <td style=" padding-left:5px;margin-left:5px; font-size:8pt; font-style:bold; font-weight:900; color:red; width:20%;">
+                                               <b> Cotización: </b>
+                                              </td>
+                                         
+                                              <td style=" font-size:9pt; font-style:bold; font-weight:1500; color:red; width:80%;">
+                                               <b t-field="doc.sequence"/> 
+                                              </td>
+                                         </tr>
+                                    </table>
+                                </td></tr>
+                                <tr><td>
+                                    <table style=" border:0px solid white; width:100%; color:black;">
+                                        <tr>
+                                              <td style="padding-left:5px;margin-left:5px;  font-size:7pt; font-size:bold; font-weight:900; width:20%;">
+                                                 <b>Fecha:  </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:6pt;width:90%;">
+                                                <b t-field="doc.date_order"/> 
+                                              </td>
+                                         </tr>
+                                    </table>
+                                </td></tr>
+                                <tr><td>
+                                    <table style=" border:0px solid white; width:100%;color:black;">
+                                        <tr>
+                                              <td style="padding-left:5px;margin-left:5px; font-size:7pt; font-size:bold; font-weight:900; width:20%;">
+                                                <b> Moneda: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:6pt;  width:80%;">
+                                                <b t-field="doc.pricelist_id.currency_id.name"/> 
+                                              </td>
+                                         </tr>
+                                    </table>
+                                </td></tr>
+                                <tr><td>
+                                    <table style=" border:0px solid white; width:100%;color:black;">
+                                        <tr>
+                                              <td style=" padding-left:5px;margin-left:5px; font-size:7pt; font-size:bold; font-weight:900; width:20%;">
+                                               <b> Condiciones: </b>
+                                              </td>
+                                            
+                                              <td style=" font-size:6pt;  width:80%;">
+                                                <b t-field="doc.payment_term_id.name"/> 
+                                              </td>
+                                         </tr>
+                                    </table>
+                                </td></tr>
+                                <tr><td>
+                                    <table style=" border:0px solid white; width:100%;color:black;">
+                                        <tr>
+                                              <td style="padding-left:5px;margin-left:5px;  font-size:7pt; font-size:bold; font-weight:900; width:20%;">
+                                                <b> Vendedor: </b>
+                                              </td>
+                                          
+                                              <td style=" font-size:6pt; width:80%;">
+                                                <b t-field="doc.partner_id.user_id.name"/> 
+                                              </td>
+                                         </tr>
+                                    </table>
+                                </td></tr>
+                                
+                            </table>
+                         
+                        </td>
+                        
+                    </tr>
+               
+              </table>
+ <br/> <br/>
+              <!-- Is there a discount on at least one line? -->
+            <t t-set="display_discount" t-value="any([l.discount for l in doc.order_line])"/>
+
+            <t t-foreach="doc.order_lines_layouted()" t-as="page">
+                <table style="border-style:solid;border-width:1px; " cellspacing="0" cellpadding="0" width="100%">
+                  
+                        <tr style="color:white; background-color:#999999; font-size:7pt; ">
+                            <th style="text-align:center; border-right:1px solid black; width:5%;">Cantidad</th>
+                            <th style="text-align:center; border-right:1px solid black;width:6%;">Unidad</th>
+                            <th style="text-align:center; border-right:1px solid black;width:10%;">Clave</th>
+                            <th style="text-align:center; border-right:1px solid black;width:44%;">Descripción</th>
+                            <th style="text-align:center; border-right:1px solid black;width:10%;">Precio Unit.</th>
+                            <th style="text-align:center; border-right:1px solid black;width:10%;">Descto.</th>
+                            <th style="text-align:center; border-right:1px solid black;width:10%;">Importe</th>
+
+                        </tr>
+                   <tbody>
+                        <t t-foreach="page" t-as="layout_category">
+
+                            <t t-if="layout_category_size &gt; 1 or page_size &gt; 1" groups="sale.group_sale_layout">
+                                <tr class="active">
+                                    <td colspan="7" style="font-weight: bold; border-bottom: 1px solid black;">&amp;bull;
+                                        <t t-esc="layout_category['name']"/>
+                                    </td>
+                                </tr>
+                            </t>
+
+                            <!-- Lines associated -->
+                            <t t-foreach="layout_category['lines']" t-as="l">
+                                <tr style="font-size:7pt;" t-if="l.is_discount ==False">
+                                    <td style="border-right:1px solid black; text-align:center;"><span t-field="l.product_uom_qty"/></td>
+                                    <td style="border-right:1px solid black;text-align:center;"><span t-field="l.product_uom" groups="product.group_uom"/></td>
+                                    <td style="border-right:1px solid black;text-align:center;"><span t-field="l.product_id.default_code"/></td>
+                                    <td style="border-right:1px solid black;"><span t-field="l.name"/></td>
+                                    <td style="border-right:1px solid black;text-align:center;"> <span t-field="l.price_unit"/></td>
+                                    <td style="border-right:1px solid black;text-align:center;"> <span t-field="l.discount"/></td>
+                                    <td style="border-right:1px solid black;text-align:center;">
+                                        <span t-field="l.price_subtotal" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                           
+                                    </td>
+
+                                    
+                                </tr>
+                            </t>
+
+                            <t t-if="(layout_category_size &gt; 1 or page_size &gt; 1) and layout_category['subtotal']" groups="sale.group_sale_layout">
+                                <tr class="text-right">
+                                    <td colspan="6">
+                                        <strong>Subtotal: </strong>
+                                        <t t-set="subtotal" t-value="sum(line.price_subtotal for line in layout_category['lines'])"/>
+                                        <span t-esc="subtotal" t-options="{'widget': 'monetary', 'display_currency': doc.pricelist_id.currency_id}"/>
+                                    </td>
+                                </tr>
+                            </t>
+
+                        </t>
+                    </tbody>
+                </table>
+
+                <t t-if="page_index &lt; page_size - 1" groups="sale.group_sale_layout">
+                    <p style="page-break-before:always;"> </p>
+                </t>
+
+                  </t>
+          
+ <br/> <br/>
+ <div style="text-align:center;font-size:7pt;">
+    <span>***</span><span t-field="doc.amount_to_text"/>
+  </div> <br/>
+<table style="border:1px solid black; width:100%; height:35%;">
+             
+                    <tr>
+
+                        <td style="width:60%; height:35%;padding-left:5px;margin-left:5px; border-right:1px solid black;">
+                            <table style="width:100%;border:0px solid white;height:100%;" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="width:11%; font-size:7pt;font-size:bold; font-weight:900;">
+                                        
+                                        <b>Transporte: </b>
+                                    </td>
+                                     <td style="width:90%; font-size:7pt;font-size:bold; font-weight:900;">
+                                         <span t-field="doc.carrier_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                         <b style=" font-size:7pt;font-size:bold; font-weight:900;"> Destino:</b>
+                                    </td>
+                                   <td style="width:90%; font-size:7pt;">
+                                        <span t-field="doc.delivery"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                         <b style=" font-size:7pt;font-size:bold; font-weight:900;"> Domicilio de Entrega:</b>
+                                    </td>
+                                   <td style="width:90%; font-size:7pt;font-style:normal; ">
+                                      
+
+                                        <span t-field="doc.partner_shipping_id.street"/>
+                                                        <span t-if="doc.partner_shipping_id.l10n_mx_street3"> No.Ext. <span t-field="doc.partner_shipping_id.l10n_mx_street3"/></span>
+                                                        <span t-if="doc.partner_shipping_id.l10n_mx_street4"> No.Int. <span t-field="doc.partner_shipping_id.l10n_mx_street4"/> </span><br/>
+
+                                                        <span t-if="doc.partner_shipping_id.street2">
+                                                          Col. <span t-field="doc.partner_shipping_id.l10n_mx_city2"/>,
+                                                        </span>
+                                                            <span t-field="doc.partner_shipping_id.city"/> ,
+                                                            <span t-field="doc.partner_shipping_id.state_id.name"/>
+                                                         <span t-if="doc.partner_shipping_id.phone">
+                                                          Tel. <span t-field="doc.partner_shipping_id.phone"/>
+                                                         </span>
+                                                        
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                         <b style=" font-size:7pt;font-size:bold; font-weight:900;"> Comentarios:</b>
+                                    </td>
+                                   <td style="width:90%; font-size:7pt;">
+                                        <span t-field="doc.description"/>
+                                    </td>
+                                </tr>
+                                  <!--<tr>
+                                    <td style="width:10%;font-size:8pt;">
+                                         <span style=" font-size:8pt;"> Quedamos a</span>
+                                    </td>
+                                   <td style=" font-size:8pt;">
+                                        <span>sus ordenes para cualquier comentario. Agradecemos su preferencia. </span>
+                                    </td>
+                                </tr>-->
+                            </table>
+                        </td>
+                        <td style="width:25%; height:35%;padding-right:5px;margin-right:5px;">
+
+                            <table style="width:100%;border:0px solid white; height:100%;" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="text-align: center; font-size:9pt;font-size:bold; font-weight:900;padding-left:3px;margin-left:3px;">
+                                      <table style=" border:0px solid white; width:100%;color:black;">
+                                        <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> SUMA: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;text-align:right;">
+                                                <span t-field="doc.suma" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                              </td>
+                                         </tr>
+                                         <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                               <b>  Descuento: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;text-align:right;">
+                                              
+                                                <span t-field="doc.discount_rate"/>
+
+                                              </td>
+                                         </tr>
+
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> SubTotal: </b>
+                                              </td>
+
+                                              <td style=" font-size:7pt; font-size:normal; font-weight:normal;text-align:right;">
+                                                <span t-field="doc.amount_untaxed" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                                              </td>
+                                         </tr>
+
+
+
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> IVA: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt; font-size:normal; font-weight:normal;text-align:right;">
+                                               <t t-foreach="doc._get_tax_amount_by_group()" t-as="amount_by_group">
+                                                    <span t-esc="amount_by_group[1]"/>
+                                
+                                                </t>
+                                              </td>
+                                         </tr>
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;"> <br/>
+                                               <b>  TOTAL: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;  text-align:right;"><br/>
+                                               <span t-field="doc.amount_total" t-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: doc.pricelist_id.currency_id}"/>
+                            
+                                              </td>
+                                         </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="font-size:7pt;font-size:bold; font-weight:900;padding-left:2px;margin-left:2px;"><br/>
+                                     <b>
+                                    Precios sujetos a cambio y sin previo aviso.<br/>
+                                      Cotización válida por <span t-esc="doc.days"/> días habiles.</b>
+
+                                    </td>
+                                </tr>
+                               
+                            </table>
+                         
+                        </td>
+                        
+                    </tr>
+               
+              </table>
+
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+
+
+</odoo>

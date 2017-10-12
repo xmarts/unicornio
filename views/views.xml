@@ -1,0 +1,164 @@
+<openerp>
+  <data>
+    <record id="view_price_quotation_search" model="ir.ui.view">
+            <field name="name">view.price.quotation.search</field>
+            <field name="model">quotation.price</field>
+            <field name="arch" type="xml">
+                <search string="Cotizador de Precios">
+                    <filter string="Inactive" icon="terp-personal+" domain="[('active','=',False)]"/>
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                         <filter string="Proveedor" icon="terp-partner" domain="[]" context="{'group_by':'provider_id'}"/> 
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_price_quotation_form" model="ir.ui.view">
+            <field name="name">view.price.quotation.form</field>
+            <field name="model">quotation.price</field>
+            <field name="arch" type="xml">
+                <form string="Cotizador de Precios">
+                    <sheet>
+                      <div class="oe_title">
+                        <label string="Cotización "/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                        <group >
+                           <group >
+                            <field name="provider_id"/>
+                            <field name="partner_id" />
+                             <field name="observation" />
+                          </group>
+                            <group >
+                            <field name="date_order"/>
+                            <field name="pricelist_id"/>
+                            <field name="active"/>
+                             </group>
+                        </group>
+                         <notebook>
+                            <page name="quotationlines" string="Lineas">
+                              <field name="line_ids" widget="one2many_list">
+                               <tree editable="bottom">
+                                  <field name = "linea" />
+                                  <field name = "categ_id"/>
+                                  <field name = "qty"/>
+                                  <field name = "costo" />
+                                  <field name = "total"/>
+                                  <field name = "costo_logistic"/>
+                                  <button name="split_quote" string="Lista de Precios" type="object" icon="fa-list"/>
+                               </tree>
+                              </field>
+                              </page>
+                             
+                         </notebook>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_price_quotation_tree" model="ir.ui.view">
+            <field name="name">view.price.quotation.tree</field>
+            <field name="model">quotation.price</field>
+            <field name="arch" type="xml">
+                <tree string="Cotizador de Precios">
+                            <field name="name"/>
+                            <field name="provider_id"/>
+                            <field name="partner_id"/>
+                            <field name="date_order"/>
+                            <field name="active"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        
+        <record id="quotation_price_action_generic" model="ir.actions.act_window">
+            <field name="name">Cotizador de Precios</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">quotation.price</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       
+        
+        <menuitem action="quotation_price_action_generic" name="Cotizador de Precios"   
+                  id="menu_price_quotation" 
+                  parent="purchase.menu_procurement_management"
+                  sequence="12"
+
+      /><!--
+      <menuitem action="quotation_price_action_generic" name="Cotizador de Precios"   
+                  id="menu_price_quotation" 
+                  parent="purchase.menu_procurement_management"
+                  sequence="12"
+
+      />-->
+      
+      <record id="view_price_quote_form" model="ir.ui.view">
+        <field name="name">price.list.line.form</field>
+        <field name="model">quotation.price.line</field>
+        <field eval="20" name="priority"/>
+        <field name="arch" type="xml">
+            <form>
+               
+                <group>
+                    <field name="lineprice_ids" nolabel="1" >
+                        <tree editable="bottom" >
+                            <field name="pricelist_id" />
+                            <field name="totals"/>
+                           
+                        </tree>
+                    </field>
+                </group>
+                 <footer>
+                    <button name="save" type="object" string="Save" class="oe_highlight"/>
+                    <button string="Discard" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_price_quote_list_list_form" model="ir.ui.view">
+        <field name="name">price.quote.list.list.form</field>
+        <field name="model">quotation.pricelist.line</field>
+        <field eval="20" name="priority"/>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <tree editable="bottom" >
+                            <field name="pricelist_id" />
+                            <field name="totals"/>
+                           
+                        </tree>
+                </group>
+            </form>
+        </field>
+    </record>
+    <!--
+    <record model="ir.values" id="sale_order_line_make_invoice_pr">
+            <field name="model_id" ref="sale.model_sale_order_line" />
+            <field name="name">PRUEBA 1</field>
+            <field name="key2">client_action_multi</field>
+            <field name="value" eval="'ir.actions.act_window,' + str(ref('sale.action_view_sale_advance_payment_inv'))" />
+            <field name="key">action</field>
+            <field name="model">helpdesk.ticket</field>
+        </record>
+  <act_window name="PRUEBA 2"
+            res_model="pos.order.invoice_wizard"
+            src_model="helpdesk.ticket"
+            key2="client_action_multi"
+            multi="True"
+            view_mode="form"
+            view_type="form"
+            target="new"
+            id="action_pos_order_invoicedk"/>-->
+
+  </data>
+</openerp>

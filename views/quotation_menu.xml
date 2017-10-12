@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+<menuitem action="unicornio.quotation_price_action_generic" name="Cotizador de Precios"   
+                  id="menu_price_quotation" 
+                  parent="purchase.menu_procurement_management"
+                  sequence="7"
+                  groups="purchase.group_purchase_manager"
+
+      />
+</odoo>

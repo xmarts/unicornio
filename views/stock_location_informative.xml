@@ -1,0 +1,72 @@
+<openerp>
+  <data>
+<record id="view_stocklocationinformative_search" model="ir.ui.view">
+            <field name="name">view.stocklocationinformative.search</field>
+            <field name="model">stock.location.informative</field>
+            <field name="arch" type="xml">
+                <search string="Ubicación">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                         <filter string="Ubicación" icon="terp-partner" domain="[]" context="{'group_by':'name'}"/> 
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_stocklocationinformative_form" model="ir.ui.view">
+            <field name="name">view.stocklocationinformative.form</field>
+            <field name="model">stock.location.informative</field>
+            <field name="arch" type="xml">
+                <form string="Ubicaciones Informativas">
+                    <sheet>
+                     <label for="name" class="oe_edit_only"/>
+                      <h1><field name="name"/></h1>
+                        <group >
+                           <group string="Localización" name="localization">
+                              <field name="posx"/>
+                              <field name="posy"/>
+                              <field name="posz"/>
+                          </group>
+                          
+                        </group>
+                         
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_stocklocationinformative_tree" model="ir.ui.view">
+            <field name="name">view.stocklocationinformative.tree</field>
+            <field name="model">stock.location.informative</field>
+            <field name="arch" type="xml">
+                <tree string="Ubicaciones Informativas">
+                            <field name="name"/>
+                            <field name="posx"/>
+                            <field name="posy"/>
+                            <field name="posz"/>
+                </tree>
+            </field>
+        </record>
+
+
+        
+        <record id="stocklocationinfo_action_generic" model="ir.actions.act_window">
+            <field name="name">Ubicaciones Informativas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">stock.location.informative</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       
+        
+        <menuitem action="stocklocationinfo_action_generic" name="Ubicaciones Informativas"   
+                  id="menu_stocklocationinfo" 
+                  parent="stock.menu_warehouse_config"
+                  sequence="2"
+
+      />s
+
+
+  </data>
+</openerp>

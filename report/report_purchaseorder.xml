@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+<template id="purchase.report_purchaseorder">
+    <t t-foreach="docs" t-as="o">
+        <div class="page">
+            <div class="oe_structure"/>
+            <t t-if="not o and doc">
+                    <t t-set="o" t-value="doc"/>
+                </t>
+                <t t-if="o and 'company_id' in o">
+                    <t t-set="company" t-value="o.company_id"/>
+                </t>
+                <t t-if="not o or not 'company_id' in o">
+                    <t t-set="company" t-value="res_company"/>
+                </t>
+               
+              <br/><br/>
+              <table style=" border:0px solid white; width:100%; border-top:1px solid black;">
+                <thead>
+                    <tr>
+
+                        <th rowspan="3" style="width:25%; "><br/>
+                            <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo" style="max-height:80px; width:100%; align:top;"/>
+                        </th>
+                        <th rowspan="3" style="width:45%; text-align:center; font-size:18pt; font-size:bold; font-weight:900; ">
+                             <span >ORDEN DE COMPRA</span>
+                        </th>
+
+                        <th style="width:30%; text-align:right;">
+
+                            <table style="width:100%;" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style=" font-size:9t;font-size:bold; font-weight:900;  ">
+                                        <b>Folio: </b>
+                                    </td>
+                                    <td style=" font-size:9pt;font-size:normal; font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                        <span t-field="o.name"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style=" font-size:9pt;font-size:bold; font-weight:900; ">
+                                        <b>Fecha: </b>
+                                    </td>
+                                    <td style=" font-size:9pt;font-size:normal; font-weight:noral; padding-left:5px;margin-left:5px; ">
+                                        <span t-field="o.date_order"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style=" font-size:9pt;font-size:bold; font-weight:900;  ">
+                                        <b>Sucursal: </b>
+                                    </td>
+                                    <td style=" font-size:9pt;font-size:normal; font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                        <span t-field="o.company_id.name"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style=" font-size:9pt;font-size:bold; font-weight:900;  ">
+                                        <b>Moneda: </b>
+                                    </td>
+                                    <td style=" font-size:9pt;font-size:normal; font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                        <span t-field="o.currency_id.name"/>
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style=" font-size:9pt;font-size:bold; font-weight:900; ">
+                                        <b>Proveedor: </b>
+                                    </td>
+                                    <td style=" font-size:9pt;font-size:normal; font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                       <span t-field="o.partner_id.ref"/>
+                                    </td>
+                                </tr>
+                            </table>
+                         
+                        </th>
+                    </tr>
+                </thead>
+              </table>
+               <!-- <table style=" border:0px solid  white; width:70%;">
+                    <tr>
+                        <td style=" padding-left:5px;margin-left:5px; font-size:9pt; font-style:bold; font-weight:900; width:80%;">
+                            <b> DISTRIBUIDORA DE HERRAMIENTAS UNICORNIO S.A.P.I DE C </b>
+                        </td>
+                        <td style=" font-size:8pt; font-style:normal; font-weight:normal; width:20%;">
+                            <span> DHU-111123-EV6</span> 
+                        </td>
+                    </tr>
+                </table>
+                <table style=" border:0px solid  white; width:70%;">
+                    <tr>
+                        <td style=" padding-left:5px;margin-left:5px;width:30%; font-size:8pt;">
+                           <span t-field="company.street"/>
+                        </td>
+                        <td style="width:30%;">
+                            <b style="font-size:8pt;">>COL. </b> <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="company.l10n_mx_city2"/>
+                        </td>
+                        <td style="width:30%;">
+                            <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="company.city"/> , <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="company.state_id.name"/>
+                        </td>
+                    </tr>
+                </table>
+                <table style=" border:0px solid  white; width:60%;">
+                    <tr>
+                        <td style=" padding-left:5px;margin-left:5px; width:20%;">
+                           <b style="font-size:8pt;">TEL. </b> <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="company.phone"/>
+                        </td>
+                        <td style=" width:20%;">
+                            <b style="font-size:8pt;">FAX </b><span style=" font-size:8pt; font-style:normal; font-weight:normal;" > (10 LINEAS)</span> 
+                        </td>
+                        <td style=" width:20%;">
+                            <b style="font-size:8pt;">FAX </b> <span style=" font-size:8pt; font-style:normal; font-weight:normal;"  t-field="company.fax"/>
+                        </td>
+                    </tr>
+                </table>
+                 <table style=" border:0px solid  white; width:60%;">
+                    <tr>
+                        <td style=" padding-left:5px;margin-left:5px; width:20%;">
+                          
+                        </td>
+                        <td style=" width:20%;">
+                           
+                        </td>
+                        <td style=" width:20%;">
+                            <span style=" font-size:8pt; font-style:normal; font-weight:normal; color:blue;" > VENTAS@DHU.MX</span> 
+                        </td>
+                    </tr>
+                </table><br/> -->
+                <table style=" border:0px solid  white;">
+                    <tr>
+                        <td style="">
+                            <span style=" font-size:9pt; font-style:bold; font-weight:900;" t-field="o.company_id.name"/>
+                            <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="o.company_id.rfc"/>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td style="font-size:8pt; font-style:normal; font-weight:normal;">
+                            <span t-field="o.company_id.partner_id.street"/>
+                            <span t-if="o.company_id.partner_id.l10n_mx_street3"><span t-field="o.company_id.partner_id.l10n_mx_street3"/></span>
+                            <span t-if="o.company_id.partner_id.l10n_mx_street4"><span t-field="o.company_id.partner_id.l10n_mx_street4"/></span>
+                            <span>COL. </span><span t-field="o.company_id.partner_id.street2"/>
+                            <span t-field="o.company_id.partner_id.city"/>
+                            <span t-field="o.company_id.partner_id.state_id.name"/>
+                        </td>
+                        
+                    </tr>
+                    <tr>
+                        <td style="font-size:8pt; font-style:normal; font-weight:normal;">
+                            <span>TEL. </span><span t-field="o.company_id.partner_id.phone"/>
+                        </td>
+                        
+                    </tr>
+                     <tr>
+                        <td style="text-align:right;">
+                           
+                            <span style=" font-size:8pt; font-style:normal; font-weight:normal; color:blue;" > COMPRAS@DHU.MX</span> 
+                        </td>
+                        
+                    </tr>
+                </table><br/> 
+               
+                <table style=" border:0px solid  white; width:80%;">
+                    <tr  style="">
+                        <td style=" padding-left:5px;margin-left:5px;text-align:center;">
+                           <b style="font-size:8pt; text-align:center;">Compra a </b> 
+                        </td>
+                        <td style="border-bottom:1px solid black;">
+                           <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="o.partner_id.name"/>
+                        </td>
+                    </tr>
+                    <tr  >
+                        <td style=" padding-left:5px;margin-left:5px;">
+                        </td>
+                        <td style="border-bottom:1px solid black; ">
+                           <span style=" font-size:8pt; font-style:normal; font-weight:normal;" t-field="o.partner_id.street"/>
+                        </td>
+                    </tr>
+                    <tr  >
+                        <td style=" padding-left:5px;margin-left:5px;">
+                        </td>
+                        <td style="font-size:8pt; font-style:normal; font-weight:normal;border-bottom:1px solid black;">
+                           <span  t-field="o.partner_id.street"/>
+                           <span t-if="o.partner_id.l10n_mx_street3"> No.Ext. <span t-field="o.partner_id.l10n_mx_street3"/></span>
+                          <span t-if="o.partner_id.l10n_mx_street4"> No.Int. <span t-field="o.partner_id.l10n_mx_street4"/> </span>
+                        </td>
+                    </tr>
+                    <tr  >
+                        <td style=" padding-left:5px;margin-left:5px;">
+                        </td>
+                        <td style="border-bottom:1px solid black;font-size:8pt; font-style:normal; font-weight:normal;">
+                            <span t-if="o.partner_id.street2">
+                               Col.<span t-field="o.partner_id.street2"/>
+                            </span>
+                           <span t-field="o.partner_id.city"/> ,
+                            <span t-field="o.partner_id.state_id.name"/>
+                        </td>
+                    </tr>
+                </table>
+                <br/><br/> <br/>
+            <table style="border-style:solid;border-width:1px; " cellspacing="0" cellpadding="0" width="100%">
+                <tr style="color:white; background-color:#999999; font-size:7pt; ">
+                            <th style="text-align:center; border-right:1px solid black; width:5%;">Cantidad</th>
+                            <th style="text-align:center; border-right:1px solid black;width:5%;">Unidad</th>
+                            <th style="text-align:center; border-right:1px solid black;width:14%;">Clave</th>
+                             <th style="text-align:center; border-right:1px solid black;width:11%;">Clave Prov.</th>
+                            <th style="text-align:center; border-right:1px solid black;width:38%;">Descripción</th>
+                            <th style="text-align:center; border-right:1px solid black;width:9%;">Monto</th>
+                            <th style="text-align:center; border-right:1px solid black;width:7%;">Descto.</th>
+                            <th style="text-align:center; border-right:1px solid black;width:11%;">Importe</th>
+
+                        </tr>
+                <tbody>
+                    <tr t-foreach="o.order_line" t-as="line"  style="font-size:7pt;">
+                        <td style="border-right:1px solid black; text-align:right;">
+                            <span t-field="line.product_qty"/>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:center;">
+                            <span t-field="line.product_uom.name"/>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:center;">
+                            <span t-field="line.product_id.default_code"/>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:center;">
+                             <t t-foreach="line.product_id.seller_ids" t-as="l">
+                                <span  t-if="l.name.id ==o.partner_id.id" t-field="l.product_code"/>
+                            </t>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:left;">
+                            <span t-field="line.name"/>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:right;">
+                            <span t-field="line.price_unit"/>
+                        </td>
+                        <td style="border-right:1px solid black; text-align:center;">
+                        </td>
+                        <td style="border-right:1px solid black; text-align:right;">
+                            <span t-field="line.price_subtotal"
+                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+ <br/><br/>
+            <table style="border:1px solid black; width:100%; height:35%;">
+             
+                    <tr>
+
+                        <td style="width:60%; height:35%;padding-left:5px;margin-left:5px; border-right:1px solid black;">
+                            <table style="width:100%;border:0px solid white;height:100%;" cellspacing="0" cellpadding="0">
+                                <tr>
+                                    <td style="width:11%; font-size:7pt;font-size:bold; font-weight:900;">
+                                        
+                                        <b>DATOS DE ENVIO Y COMENTARIOS </b>
+                                    </td>
+                                    
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                         
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                    </td>
+                                </tr>
+                                 <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                        <b>Medio de Transporte</b>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                        <b style="font-size:7pt;">Condiciones </b> <span style=" font-size:7pt; font-style:normal; font-weight:normal;" t-field="o.pay_method_id.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                        <b style="font-size:7pt;">Elaborada por </b> <span style=" font-size:7pt; font-style:normal; font-weight:normal;" t-field="o.create_uid.name"/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td style="width:10%;font-size:7pt;">
+                                        <b style="font-size:7pt;">Actualizada por</b> <span style=" font-size:7pt; font-style:normal; font-weight:normal;" t-field="o.write_uid.name"/>
+                                    </td>
+                                </tr>
+                                
+                            </table>
+                        </td>
+                        <td style="width:25%; height:35%;padding-right:5px;margin-right:5px;">
+
+                            <table style="width:100%;border:0px solid white; height:100%;" cellspacing="0" cellpadding="0">
+                               
+                                <tr>
+                                    <td style="text-align: center; font-size:9pt;font-size:bold; font-weight:900;padding-left:3px;margin-left:3px;">
+                                      <table style=" border:0px solid white; width:100%;color:black;">
+                                        <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> Subtotal: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;text-align:right;">
+                                                <span t-field="o.amount_untaxed"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/><span t-field="o.currency_id.name"/>
+                                              </td>
+                                         </tr>
+                                         <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                               <b>  Descuento: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;text-align:right;">
+                                              
+                                                0.00<span t-field="o.currency_id.name"/>
+
+                                              </td>
+                                         </tr>
+
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> Flete: </b>
+                                              </td>
+
+                                              <td style=" font-size:7pt; font-size:normal; font-weight:normal;text-align:right;">
+                                               0.00<span t-field="o.currency_id.name"/>
+                                              </td>
+                                         </tr>
+                                         <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> Subtotal: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;text-align:right;">
+                                               <span t-field="o.amount_untaxed"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/><span t-field="o.currency_id.name"/>
+                                              </td>
+                                         </tr>
+
+
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;">
+                                                <b> IVA: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt; font-size:normal; font-weight:normal;text-align:right;">
+                                              <span t-field="o.amount_tax"
+                                                t-options='{"widget": "monetary", "display_currency": o.currency_id}'/><span t-field="o.currency_id.name"/>
+                                              </td>
+                                         </tr>
+                                          <tr>
+                                              <td style=" font-size:7pt; font-size:bold; font-weight:900;"> <br/>
+                                               <b>  TOTAL: </b>
+                                              </td>
+                                           
+                                              <td style=" font-size:7pt;  text-align:right;"><br/>
+                                               <span t-field="o.amount_total"
+                                    t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                            <span t-field="o.currency_id.name"/>
+                                              </td>
+                                         </tr>
+                                        </table>
+                                    </td>
+                                </tr>
+                                
+                               
+                            </table>
+                         
+                        </td>
+                        
+                    </tr>
+               
+              </table>
+
+            
+
+            <p t-field="o.notes"/>
+            <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+
+        <report 
+            string="Purchase Order" 
+            id="purchase.action_report_purchase_order" 
+            model="purchase.order" 
+            report_type="qweb-pdf"
+            name="purchase.report_purchaseorder" 
+            file="purchase.report_purchaseorder"
+            paperformat="unicornio.paperformat_reportesuni" 
+        />
+
+
+</odoo>

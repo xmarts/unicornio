@@ -1,0 +1,10 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_quotation_price_line,access_quotation_price_line,model_quotation_price_line,,1,1,1,1
+access_res_partner_lines,access_res_partner_lines,model_res_partner_lines,,1,1,1,1
+access_quotation_price,access_quotation_price,model_quotation_price,,1,1,1,1
+access_quotation_pricelist_line,access_quotation_pricelist_line,model_quotation_pricelist_line,,1,1,1,1
+access_res_partnerprice_lines,access_res_partnerprice_lines,model_res_partnerprice_lines,,1,1,1,1
+access_route,access_route,model_route,,1,1,1,1
+access_sale_route,access_sale_route,model_sale_route,,1,1,1,1
+access_sale_route_line,access_sale_route_line,model_sale_route_line,,1,1,1,1
+access_stock_location_informative,access_stock_location_informative,model_stock_location_informative,,1,1,1,1

@@ -1,0 +1,215 @@
+<openerp>
+    <data>
+     
+        <record id="view_categoryproviders_form_inherit" model="ir.ui.view">
+            <field name="name">view.categoryproviders.form.add.text.field</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="base.view_partner_form"/>
+            <field name="arch" type="xml">
+            <xpath expr="//page" position="after">
+  
+              <page name="lines" string="Lineas">
+                   <field name="lines_ids" widget="one2many_list">
+                        <tree editable="bottom">
+                            <field name="categ_id"/>
+                             <button name="split_price" string="Lista de Precios" type="object" icon="fa-list"/>
+                        </tree>
+                    </field>
+                 </page>
+            </xpath>
+             <xpath expr="//group[@name='purchase']/field[@name='supplier']" position="after">
+                    <field name="logistic"/>
+                </xpath>
+
+            </field>
+        </record>
+        <record id="view_price_utility_form" model="ir.ui.view">
+        <field name="name">price.listutility.line.form</field>
+        <field name="model">res.partner.lines</field>
+        <field eval="20" name="priority"/>
+        <field name="arch" type="xml">
+            <form>
+               
+                <group>
+                    <field name="linepartner_ids" nolabel="1" >
+                        <tree editable="bottom" >
+                            <field name="pricelist_id" />
+                            <field name="utility"/>
+                           
+                        </tree>
+                    </field>
+                </group>
+                 <footer>
+                    <button name="save" type="object" string="Save" class="oe_highlight"/>
+                    <button string="Discard" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_price_parnter_list_list_form" model="ir.ui.view">
+        <field name="name">price.parnter.list.list.form</field>
+        <field name="model">res.partnerprice.lines</field>
+        <field eval="20" name="priority"/>
+        <field name="arch" type="xml">
+            <form>
+                <group>
+                    <tree editable="bottom" >
+                            <field name="pricelist_id" />
+                            <field name="utility"/>
+                           
+                        </tree>
+                </group>
+            </form>
+        </field>
+    </record>
+    <record id="view_productunicornio_form_inherit" model="ir.ui.view">
+            <field name="name">view.productunicornio.form.add.text.field</field>
+            <field name="model">product.template</field>
+            <field name="inherit_id" ref="product.product_template_only_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='barcode']" position="after">
+                    <field name="ubication_id" invisible="1"/>
+                    <field name="ubicationinfo_id" />
+                    <field name="pediment" />
+                    <field name="clasification" />
+                </xpath>
+    
+            </field>
+    </record>
+     <record id="view_saleunicornio_form_inherit" model="ir.ui.view">
+            <field name="name">view.saleunicornio.form.add.text.field</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='confirmation_date']" position="after">
+                    <field name="delivery"/>
+                    <field name="delivered"/>
+                    <field name="nopurchase"/>
+                   
+                </xpath>
+                 <xpath expr="//group[@name='sales_person']/field[@name='user_id']" position="after">
+                     <field name="amount_to_text"/>
+                     <field name="sequence"/>
+                     <field name="days"/>
+                </xpath>
+                <xpath expr="//field[@name='partner_shipping_id']" position="after">
+                    <field name="description"/>
+                </xpath>
+                 <xpath expr="//group[@name='sale_total']/field[@name='amount_untaxed']" position="before">
+                     <field name="suma"/>
+                     <field name="discount_rate"/>
+                </xpath>
+                 <xpath expr="//group[@name='sale_total']/field[@name='amount_untaxed']" position="attributes">
+                   <attribute name="string" >Subtotal</attribute> 
+                </xpath>
+                 <xpath expr="//notebook/page/field[@name='order_line']/tree/field[@name='price_subtotal']" position="before">
+                  <field name="is_discount"/>
+                </xpath>  
+
+                <!--<xpath expr="//button[@name='create_discount']" position="replace">-->
+                 <!--<button name="create_discount" string="Aplicar Descuento-->
+                    <!--" type="object" class="oe_inline fa fa-arrow-right oe_link" attrs="{'invisible': ['|',('global_discount','=', False), ('state','!=', 'draft')]}"/>-->
+                <!--</xpath>-->
+            </field>
+    </record>
+
+    <record id="view_invoiceunicornio_form_inherit" model="ir.ui.view">
+            <field name="name">view.invoiceunicornio.form.add.text.field</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.invoice_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='journal_id']" position="after">
+                    <field name="delivery_id"/>
+                    <field name="delivered"/>
+                </xpath>
+                 <xpath expr="//field[@name='forma_pago']" position="after">
+                    <field name="pay_method" />
+                     <field name="pay" invisible="1"/>
+                </xpath>
+                <xpath expr="//group/field[@name='amount_untaxed']" position="before">
+                    <field name="suma"/>
+                     <field name="discount_rate"/>
+                </xpath>
+                 <xpath expr="//notebook/page/field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="before">
+                  <field name="is_discount"/>
+                </xpath> 
+                <xpath expr="//group/group/field[@name='payment_term_id']" position="after">
+                    <field name="is_credit"/>
+                </xpath>
+               <xpath expr="//group/field[@name='amount_total']" position="replace">
+                   <div class="oe_subtotal_footer_separator oe_inline o_td_label">
+                       <button name="button_dummy" states="draft" string="(update)" type="object" class="oe_edit_only oe_link"/>
+
+                       <label for="amount_total" />
+                       <field name="amount_total" nolabel="1" class="oe_subtotal_footer_separator" widget='monetary' options="{'currency_field': 'currency_id'}"/>
+
+                   </div>
+                </xpath>
+            </field>
+    </record>
+    <record id="view_accountjournal_form_inherit" model="ir.ui.view">
+            <field name="name">view.accountjournal.form.add.text.field</field>
+            <field name="model">account.journal</field>
+            <field name="inherit_id" ref="account.view_account_journal_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='type']" position="after">
+                    <field name="name_report"/>
+                    <field name="type_account"/>
+                    <field name="is_credit"/>
+                </xpath>
+            </field>
+    </record>
+    <record id="view_stockpicking_form_inherit" model="ir.ui.view">
+            <field name="name">view.stockpicking.form.add.text.field</field>
+            <field name="model">stock.picking</field>
+            <field name="inherit_id" ref="stock.view_picking_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='backorder_id']" position="after">
+                    <field name="description"/>
+                </xpath>
+               <xpath expr="//notebook/page/field[@name='pack_operation_product_ids']/tree/field[@name='product_qty']" position="before">
+                  <field name="qty_stock"/>
+                </xpath>
+                <xpath expr="//notebook/page/field[@name='move_lines']/kanban/field[@name='product_uom_qty']" position="before">
+                  <field name="qty_stock"/>
+                </xpath>
+            </field>
+    </record>
+    <record id="view_purchaseorder_form_inherit" model="ir.ui.view">
+            <field name="name">view.purchaseorder.form.add.text.field</field>
+            <field name="model">purchase.order</field>
+            <field name="inherit_id" ref="purchase.purchase_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='currency_id']" position="after">
+                    <field name="description"/>
+                </xpath>
+                 
+            </field>
+    </record>
+    <record id="view_stockmove_form_inherit" model="ir.ui.view">
+            <field name="name">view.stockmove.form.add.text.field</field>
+            <field name="model">stock.move</field>
+            <field name="inherit_id" ref="stock.view_move_picking_tree"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='product_uom_qty']" position="after">
+                    <field name="qty_stock"/>
+                </xpath>
+                 
+            </field>
+    </record>
+
+        <record id="view_accountinvoicesearch_form_inherit" model="ir.ui.view">
+            <field name="name">view.accountinvocesearch.form.add.text.field</field>
+            <field name="model">account.invoice</field>
+            <field name="inherit_id" ref="account.view_account_invoice_filter"/>
+            <field name="arch" type="xml">
+                <xpath expr="//search/group/filter[@name='status']" position="after">
+                    <filter string="Métodos de Pago" context="{'group_by':'pay_method'}"/>
+                </xpath>
+            </field>
+    </record>
+
+
+    </data>
+</openerp>

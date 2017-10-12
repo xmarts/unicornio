@@ -1,0 +1,171 @@
+<openerp>
+  <data>
+<record id="view_route_search" model="ir.ui.view">
+            <field name="name">view.route.search</field>
+            <field name="model">route</field>
+            <field name="arch" type="xml">
+                <search string="Ruta">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                         <filter string="Ruta" icon="terp-partner" domain="[]" context="{'group_by':'name'}"/> 
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_route_form" model="ir.ui.view">
+            <field name="name">view.route.form</field>
+            <field name="model">route</field>
+            <field name="arch" type="xml">
+                <form string="Ruta">
+                    <sheet>
+                      <div class="oe_title">
+                        <label string="Ruta"/>
+                        
+                    </div>
+                        <group >
+                           <group >
+                            <field name="name"/>
+                            <field name="notes" />
+                          </group>
+                          
+                        </group>
+                         
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_route_tree" model="ir.ui.view">
+            <field name="name">view.route.tree</field>
+            <field name="model">route</field>
+            <field name="arch" type="xml">
+                <tree string="Rutas">
+                            <field name="name"/>
+                            <field name="notes"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        
+        <record id="route_action_generic" model="ir.actions.act_window">
+            <field name="name">Rutas</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">route</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       
+        
+        <menuitem action="route_action_generic" name="Rutas"   
+                  id="menu_route" 
+                  parent="sales_team.menu_sale_config"
+                  sequence="14"
+
+      />
+
+<record id="view_sale_route_search" model="ir.ui.view">
+            <field name="name">view.sale.route.search</field>
+            <field name="model">sale.route</field>
+            <field name="arch" type="xml">
+                <search string="Rutas de Entrega">
+                    <field name="name"/>
+                    <newline/>
+                    <group expand="0" string="Group By...">
+                         <filter string="Proveedor" icon="terp-partner" domain="[]" context="{'group_by':'employee_id'}"/>
+                          <filter string="Ruta" icon="terp-partner" domain="[]" context="{'group_by':'route_id'}"/>  
+                        <separator orientation="vertical"/>
+                    </group>
+                </search>
+            </field>
+        </record>
+
+        <record id="view_sale_route_form" model="ir.ui.view">
+            <field name="name">view.sale.route.form</field>
+            <field name="model">sale.route</field>
+            <field name="arch" type="xml">
+                <form string="Rutas de Entrega">
+                  <header>
+                    <button name="generate_route" string="Generar Ruta" type="object"  attrs="{'invisible': [('generate', '=', True)]}"/>
+                </header>
+                    <sheet>
+                      <div class="oe_title">
+                        <label string="No. Entrega"/>
+                        <h1>
+                            <field name="name" readonly="1"/>
+                        </h1>
+                    </div>
+                        <group >
+                           <group >
+                            <field name="date_order"/>
+                            <field name="employee_id" />
+                             <field name="notes" />
+                          </group>
+                            <group >
+                            <field name="route_id"/>
+                            <field name="delivery"/>
+                            <field name="generate"/>
+                             </group>
+                        </group>
+                         <notebook>
+                            <page name="line_ids" string="Entregas">
+                              <field name="line_ids" widget="one2many_list">
+                               <tree editable="bottom">
+                                  <field name = "priority" />
+                                  <field name = "invoice_id"/>
+                                  <field name = "partner_id"/>
+                                  <field name = "date_delivery"/>
+                                  <field name = "delivered" />
+                                  <field name = "notes"/>
+                               </tree>
+                              </field>
+                              </page>
+                             
+                         </notebook>
+
+
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="view_sale_route_tree" model="ir.ui.view">
+            <field name="name">view.sale.route.tree</field>
+            <field name="model">sale.route</field>
+            <field name="arch" type="xml">
+                <tree string="Rutas de Entrega">
+                            <field name="name"/>
+                            <field name="date_order"/>
+                            <field name="employee_id"/>
+                            <field name="route_id"/>
+                            <field name="delivery"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        
+        <record id="sale_route_action_generic" model="ir.actions.act_window">
+            <field name="name">Rutas de Entrega</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">sale.route</field>
+            <field name="view_type">form</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+       
+        
+        <menuitem action="sale_route_action_generic" name="Rutas de Entrega"   
+                  id="menu_sale_route" 
+                  parent="sales_team.menu_sales"
+                  sequence="14"
+
+      />
+
+
+
+
+  </data>
+</openerp>
