@@ -105,7 +105,7 @@
                                   </td>
                                          
                                   <td style=" font-size:8pt; font-style:bold; font-weight:1500; color:red; width:90%;font-family: sans-serif;">
-                                      <b t-raw="'%s &lt;br&gt;' % o.invoice_sequence_id.approval_id and o.invoice_sequence_id.approval_id.serie or ''"/>
+
                                         <b t-field="o.number"/>
                                    </td>
                                 </tr>

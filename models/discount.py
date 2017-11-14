@@ -81,3 +81,12 @@ class SaleOrder(models.Model):
         else:
             new_id = super(SaleOrder, self).create(vals)
         return new_id
+
+    @api.onchange('order_line')
+    def _onchange_orderline(self):
+        if self.order_line:
+            x = 0
+            cont = len(self.order_line.filtered(lambda r: r.is_discount == True))
+            vl = cont == 0 and abs(self.discount_rate) > 0
+            if cont == 0 and abs(self.discount_rate) > 0:
+                self.write({'discount_rate': 0})
