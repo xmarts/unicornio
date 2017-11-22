@@ -246,6 +246,10 @@ class SaleOrderLine(models.Model):
             order = line.order_id
             cont = 0
             product_id = self.env.user.company_id.sale_discount_product_id
+            if line.qty_delivered > 0:
+                discount_line = self.env['sale.order.line'].search(
+                    [('order_id', '=', order.id), ('product_id', '=', product_id.id)])
+                discount_line.write({'qty_delivered': 1})
             orderlines = self.env['sale.order.line'].search(
                 [('order_id', '=', order.id), ('product_id', '!=', product_id.id)])
             for l in orderlines:

@@ -75,7 +75,7 @@ class SaleOrder(models.Model):
                     'product_uom': product_id.uom_id.id,
                     'product_id': product_id.id,
                     'order_id': order,
-                    'qty_delivered': 1,
+                    'qty_delivered': 0,
                     'sequence': 100,
                 })
             #raise UserError(_('HOLLA ENTRO 333S.'))
