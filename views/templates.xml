@@ -122,11 +122,11 @@
                 <xpath expr="//field[@name='journal_id']" position="after">
                     <field name="delivery_id"/>
                     <field name="delivered"/>
-                </xpath>
+                </xpath><!--
                  <xpath expr="//field[@name='forma_pago']" position="after">
                     <field name="pay_method" />
                      <field name="pay" invisible="1"/>
-                </xpath>
+                </xpath>-->
                 <xpath expr="//group/field[@name='amount_untaxed']" position="before">
                     <field name="suma"/>
                      <field name="discount_rate"/>

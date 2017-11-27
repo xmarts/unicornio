@@ -174,6 +174,8 @@ class SaleOrder(models.Model):
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
+
+
     @api.multi
     def _prepare_invoice_line2(self, qty,amount):
         """
@@ -245,10 +247,13 @@ class SaleOrderLine(models.Model):
         for line in self:
             order = line.order_id
             cont = 0
+            _logger.info(_("hola entre a compute estutus"))
             product_id = self.env.user.company_id.sale_discount_product_id
             if line.qty_delivered > 0:
+                _logger.info(_("entro al if compute estutus"))
                 discount_line = self.env['sale.order.line'].search(
                     [('order_id', '=', order.id), ('product_id', '=', product_id.id)])
+                _logger.info(_("estutus %s")%(discount_line))
                 discount_line.write({'qty_delivered': 1})
             orderlines = self.env['sale.order.line'].search(
                 [('order_id', '=', order.id), ('product_id', '!=', product_id.id)])
