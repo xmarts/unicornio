@@ -254,7 +254,16 @@ class SaleOrderLine(models.Model):
                 discount_line = self.env['sale.order.line'].search(
                     [('order_id', '=', order.id), ('product_id', '=', product_id.id)])
                 _logger.info(_("estutus %s")%(discount_line))
+                vals = {
+                    'invoice_status':'invoiced',
+                    'qty_delivered': 1,
+                    'qty_invoiced': 1,
+                    'qty_to_invoice': 0
+                }
                 discount_line.write({'qty_delivered': 1})
+                discount_line.write({'qty_invoiced': 1})
+                discount_line.write({'qty_to_invoice': 0})
+                discount_line.write({'invoice_status': 'invoiced'})
             orderlines = self.env['sale.order.line'].search(
                 [('order_id', '=', order.id), ('product_id', '!=', product_id.id)])
             for l in orderlines:
