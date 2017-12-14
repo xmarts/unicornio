@@ -315,7 +315,6 @@ class StockPackOperation(models.Model):
     _inherit='stock.pack.operation'
     @api.one
     def _compute_qtystock(self):
-        sSelf = self.sudo()
         self.qty_stock= self.product_id.qty_available
     qty_stock  = fields.Integer('Cantidad Almacenada', compute="_compute_qtystock")
     #@api.one
