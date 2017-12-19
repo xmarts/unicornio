@@ -4,7 +4,7 @@ import unicornio
 #import listprice
 import discount
 import procurement_group
-import sale_order_line
+#import sale_order_line
 import sale_make_invoice_advanced
 #import accountinvoiceline_whitoutdiscount
 #import account_invoice

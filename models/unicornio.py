@@ -259,46 +259,40 @@ class Unicornio_Salerouteline(models.Model):
 class Unicornio_SaleOrder(models.Model):
     _inherit = 'sale.order'
     discount_rate= fields.Float('Descuento')
-    suma = fields.Float('Suma', compute='_compute_suma')
+    suma = fields.Float('Suma')
     date_delivery = fields.Datetime('Fecha de Entrega', index=True, copy=False, default=fields.Datetime.now,\
         help="Tiempo de Entrega Asignada por Partida")
     @api.multi
     def _default_date(self):
         dias = timedelta(days=3)
-        #_logger.info(_(" ENTRO AL IF UBICACIOOOON : %s") % (self.date_order))
-        #fecha_orden = datetime.strptime(str(self.date_order),'%m/%d/%Y %H:%M:%S.%f' )
         fecha_orden = datetime.now()
         fecha_fin = fecha_orden +  dias
-        #_logger.info(_(" ENTRO AL IF UBICACIOOOON : %s") % (fecha_fin.date))
         validity_date = fecha_fin.date()
         return validity_date
 
     validity_date = fields.Date(string='Expiration Date', readonly=True, default=_default_date, states={'draft': [('readonly', False)], 'sent': [('readonly', False)]}, help="Manually set the expiration date of your quotation (offer), or it will set the date automatically based on the template if online quotation is installed.")
     description = fields.Text('Descripción')
 
-    @api.one
-    def _compute_suma(self):
-        sale_obj = self.env['sale.order.line']
-        sale = sale_obj.search([('order_id', '=', self.id)])
-        total = 0
-        apa = False
-        for sales in sale:
-            #_logger.info(_(" ENTRO AL mi funcion suma : %s") % (sales.name.find('Descuento')))
-            if sales.name.find('Descuento')==  -1:
-                #total = sales.price_unit * sales.product_qty
-                total=total+ sales.price_subtotal
-        #_logger.info(_(" ENTRO AL mi funcion suma : %s") % (total))
-        self.suma = total
-        for order in self:
-            amount = 0
-            if order.discount_type == 'fixed':
-                amount = order.discount_amount
-            if order.discount_type == 'percentage':
-                amount = (order.suma * order.discount_percentage)/100
-            order.write ({ 'discount_rate': -amount})
-            product_id = self.env.user.company_id.sale_discount_product_id
-            line = sale_obj.search([('order_id', '=', self.id),('product_id','=',product_id.id)])
-            line.write ({'price_unit': -amount})
+    #@api.one
+    #def _compute_suma(self):
+    #    sale_obj = self.env['sale.order.line']
+    #    sale = sale_obj.search([('order_id', '=', self.id)])
+    #    total = 0
+    #    apa = False
+    #    for sales in sale:
+    #        if sales.name.find('Descuento') == -1:
+    #            total=total+ sales.price_subtotal
+    #    self.suma = total
+    #    for order in self:
+    #        amount = 0
+    #        if order.discount_type == 'fixed':
+    #            amount = order.discount_amount
+    #        if order.discount_type == 'percentage':
+    #            amount = (order.suma * order.discount_percentage)/100
+    #        order.write ({ 'discount_rate': -amount})
+            #product_id = self.env.user.company_id.sale_discount_product_id
+            #line = sale_obj.search([('order_id', '=', self.id),('product_id','=',product_id.id)])
+            #line.write ({'price_unit': -amount})
         
 
 
@@ -422,7 +416,7 @@ class AccountInvoice_fields(models.Model):
 
     _inherit = 'account.invoice'
     cambio = fields.Float(string='Tipo de Cambio', required=False,  help='Tipo de cambio especifico para los pagos', digits=(12, 4))
-    discount_rate= fields.Float(string='Descuento', compute="_compute_discount")
+    discount_rate= fields.Float(string='Descuento', compute="_compute_discounts")
     suma = fields.Float(string='Suma', compute="_compute_suma")
     is_credit = fields.Boolean(string='Es nota de crédito', default=False)
 
@@ -490,22 +484,28 @@ class AccountInvoice_fields(models.Model):
 
     @api.depends('invoice_line_ids')
     @api.one
-    def _compute_discount(self):
-        total = 0
-        for line in self.invoice_line_ids:
-            #_logger.info(_(" ENTRO AL mi funcion descuento : %s") % (line.name.find('Descuento')))
-            if line.name.find('Descuento') <> -1:
-                total = total + line.price_subtotal
-        #_logger.info(_(" ENTRO AL mi funcion descuento : %s") % (total))
-        self.discount_rate = total
+    def _compute_discounts(self):
+        suma = sum(line.price_subtotal for line in self.invoice_line_ids)
+        if self.partner_id.discount_type == 'fixed':
+            descuento = self.partner_id.discount_amount
+        if self.partner_id.discount_type == 'percentage':
+            descuento = (suma * self.partner_id.discount_percentage) / 100
+        self.discount_rate = descuento
 
     @api.one
     @api.depends('invoice_line_ids', 'tax_line_ids.amount','suma','amount_untaxed')
     def _compute_amount(self):
         _logger.info("")
-        self.amount_untaxed = sum(line.price_subtotal for line in self.invoice_line_ids)
+        suma= sum(line.price_subtotal for line in self.invoice_line_ids)
+        if self.partner_id.discount_type == 'fixed':
+            descuento = self.partner_id.discount_amount
+        if self.partner_id.discount_type == 'percentage':
+            descuento = (suma * self.partner_id.discount_percentage) / 100
+            total = suma - descuento
+        self.discount_rate = descuento
+        self.amount_untaxed = total
         self.amount_tax = sum(line.amount for line in self.tax_line_ids)
-        self.amount_total = self.amount_untaxed + self.amount_tax
+        self.amount_total = total + self.amount_tax
         amount_total_company_signed = self.amount_total
         amount_untaxed_signed = self.amount_untaxed
         if self.currency_id and self.company_id and self.currency_id != self.company_id.currency_id:
