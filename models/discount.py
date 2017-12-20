@@ -129,7 +129,8 @@ class SaleOrderLines(models.Model):
     @api.onchange('product_id')
     def _onchange_discount(self):
         super(SaleOrderLines, self)._onchange_discount()
-        if self.order_id.discount_type == 'fixed':
-            self.discount = self.order_id.discount_amount
-        if self.order_id.discount_type == 'percentage':
-            self.discount= self.order_id.discount_percentage
+        if self.order_id.global_discount == True:
+            if self.order_id.discount_type == 'fixed':
+                self.discount = self.order_id.discount_amount
+            if self.order_id.discount_type == 'percentage':
+                self.discount= self.order_id.discount_percentage
