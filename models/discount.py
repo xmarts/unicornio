@@ -10,37 +10,37 @@ _logger = logging.getLogger(__name__)
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+    #@api.depends('order_line.price_total')
+    #def _amount_all(self):
 
-    @api.depends('order_line.price_total')
-    def _amount_all(self):
-        for order in self:
-            amount_untaxed = amount_tax = 0.0
-            for line in order.order_line:
-                amount_untaxed += line.price_subtotal
+        #for order in self:
+        #   amount_untaxed = amount_tax = 0.0
+        #    for line in order.order_line:
+        #        amount_untaxed += line.price_subtotal
                 # FORWARDPORT UP TO 10.0
-                if order.company_id.tax_calculation_rounding_method == 'round_globally':
-                    price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
-                    taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty,
-                                                    product=line.product_id, partner=order.partner_shipping_id)
-                    amount_tax += sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
-                else:
-                    amount_tax += line.price_tax
+        #        if order.company_id.tax_calculation_rounding_method == 'round_globally':
+        #            price = line.price_unit * (1 - (line.discount or 0.0) / 100.0)
+        #            taxes = line.tax_id.compute_all(price, line.order_id.currency_id, line.product_uom_qty,
+        #                                            product=line.product_id, partner=order.partner_shipping_id)
+        #            amount_tax += sum(t.get('amount', 0.0) for t in taxes.get('taxes', []))
+        #        else:
+        #            amount_tax += line.price_tax
 
-            amount= suma= descuento = total= 0.0
-            if order.discount_type == 'fixed':
-                descuento = order.discount_amount
-            if order.discount_type == 'percentage':
-                suma = amount_untaxed
-                descuento = (suma * order.discount_percentage) / 100
-                total = suma - descuento
-                amount = total+amount_tax
-            order.update({
-                'suma': suma,
-                'discount_rate':descuento,
-                'amount_untaxed': order.pricelist_id.currency_id.round(total),
-                'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
-                'amount_total': amount,
-            })
+        #    amount= suma= descuento = total= 0.0
+        #    if order.discount_type == 'fixed':
+        #        descuento = order.discount_amount
+        #    if order.discount_type == 'percentage':
+        #        suma = amount_untaxed
+        #        descuento = (suma * order.discount_percentage) / 100
+        #        total = suma - descuento
+        #        amount = total+amount_tax
+        #    order.update({
+        #        'suma': suma,
+        #        'discount_rate':descuento,
+        #        'amount_untaxed': order.pricelist_id.currency_id.round(total),
+        #        'amount_tax': order.pricelist_id.currency_id.round(amount_tax),
+        #        'amount_total': amount,
+        #    })
 
     @api.multi
     def create_discount(self):
@@ -123,3 +123,12 @@ class SaleOrder(models.Model):
     #        vl = cont == 0 and abs(self.discount_rate) > 0
     #        if cont == 0 and abs(self.discount_rate) > 0:
     #            self.write({'discount_rate': 0})
+class SaleOrderLines(models.Model):
+    _inherit = 'sale.order.line'
+
+    @api.onchange('product_id')
+    def _onchange_orderline(self):
+        if self.order_id.discount_type == 'fixed':
+            self.discount = self.order_id.discount_amount
+        if self.order_id.discount_type == 'percentage':
+            self.discount= self.order_id.discount_percentage
