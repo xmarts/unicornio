@@ -127,7 +127,8 @@ class SaleOrderLines(models.Model):
     _inherit = 'sale.order.line'
 
     @api.onchange('product_id')
-    def _onchange_orderline(self):
+    def _onchange_discount(self):
+        super(SaleOrderLines, self)._onchange_discount()
         if self.order_id.discount_type == 'fixed':
             self.discount = self.order_id.discount_amount
         if self.order_id.discount_type == 'percentage':
