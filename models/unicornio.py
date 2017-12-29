@@ -276,11 +276,12 @@ class Unicornio_SaleOrder(models.Model):
     @api.depends('amount_untaxed','order_line.price_total')
     def _compute_suma(self):
         total=0.0
-        for line in self.order_line:
-            price_subtotal = line.price_unit * line.product_qty
-            total=total+ price_subtotal
-        self.suma= total
-        self.discount_rate = self.amount_untaxed - total
+        for sale in self:
+            for line in sale.order_line:
+                price_subtotal = line.price_unit * line.product_qty
+                total=total+ price_subtotal
+            sale.suma= total
+            sale.discount_rate = sale.amount_untaxed - total
         
 
 
@@ -416,11 +417,12 @@ class AccountInvoice_fields(models.Model):
     @api.depends('invoice_line_ids')
     def _compute_suma(self):
         total = 0.0
-        for line in self.invoice_line_ids:
-            price_subtotal = line.price_unit * line.quantity
-            total = total + price_subtotal
-        self.suma = total
-        self.discount_rate = self.amount_untaxed - total
+        for invoice in self:
+            for line in invoice.invoice_line_ids:
+                price_subtotal = line.price_unit * line.quantity
+                total = total + price_subtotal
+            invoice.suma = total
+            invoice.discount_rate = invoice.amount_untaxed - total
 
     #@api.one
     #@api.depends('invoice_line_ids', 'tax_line_ids.amount','suma','amount_untaxed')
@@ -619,8 +621,9 @@ class stockMove(models.Model):
     _inherit= 'stock.move'
     @api.one
     def _compute_qtystock(self):
-        sSelf = self.sudo()
-        self.qty_stock= sSelf.product_id.qty_available
+        #sSelf = self.sudo()
+        #self.qty_stock= sSelf.product_id.qty_available
+        self.qty_stock= self.product_id.qty_available
     qty_stock  = fields.Integer('Cantidad Almacenada', compute="_compute_qtystock")
 class AccountJournal(models.Model):
     _inherit= 'account.journal'
