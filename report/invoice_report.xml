@@ -1,32 +1,29 @@
-<?xml version="1.0"?>
-<odoo>
-
-
-    <template id="account.report_invoice">
+<t t-name="account.report_invoice">
         <t t-call="unicornio.extend_layout_dor">
             <t t-foreach="docs" t-as="o">
             <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
-            <div class="page" >
+                 
+            <div class="page">
 
                 <t t-if="not o and doc">
                     <t t-set="o" t-value="doc"/>
                 </t>
                 <t t-if="o and 'company_id' in o">
-                    <t t-set="company" t-value="o.company_id"></t>
+                    <t t-set="company" t-value="o.company_id"/>
                 </t>
                 <t t-if="not o or not 'company_id' in o">
-                    <t t-set="company" t-value="res_company"></t>
+                    <t t-set="company" t-value="res_company"/>
                 </t>
                 
                 
-                <table style=" border:0px solid white; width:100%;" >
-                  <tr >
+                <table style=" border:0px solid white; width:100%;">
+                  <tr>
                       <th style="width:75%; text-align:left;">
                       </th>
                            
                     </tr> 
                 </table><br/>
-                <table style=" border:0px solid white; width:100%;" >
+                <table style=" border:0px solid white; width:100%;">
                 <thead>
                     <tr>
                         <th rowspan="3" style="width:30%; ">
@@ -34,10 +31,10 @@
                         </th>
                         <th style="width:35%; text-align:right; padding-right:5px;margin-right:5px; padding-left:5px;margin-left:25px; ">
                         
-                            <table style="width:100%; border:1px solid #A4A4A4;"  cellspacing="0" cellpadding="0">
-                                <tr style="background-color:#A4A4A4; color:white;" >
+                            <table style="width:100%; border:1px solid #A4A4A4;" cellspacing="0" cellpadding="0">
+                                <tr style="background-color:#A4A4A4; color:white;">
                                     <td style=" font-size:8pt;font-size:bold; font-weight:900;font-family: sans-serif; padding-left:5px;margin-left:25px; ">
-                                        <b >SUCURSAL EMISORA CFDI:</b>
+                                        <b>SUCURSAL EMISORA CFDI:</b>
                                 
                                     </td>
                                 </tr>
@@ -88,8 +85,8 @@
                         </th>
                        
                         <th style="width:35%; text-align:right; padding-right:5px;margin-right:5px; ">
-                           <table style="width:100%; border:1px solid #A4A4A4;"  cellspacing="0" cellpadding="0">
-                                <tr style="background-color:#A4A4A4; color:white;" >
+                           <table style="width:100%; border:1px solid #A4A4A4;" cellspacing="0" cellpadding="0">
+                                <tr style="background-color:#A4A4A4; color:white;">
                                     <td style=" font-size:8pt;font-size:bold; font-weight:900; font-family: sans-serif;padding-left:5px;margin-left:25px; ">
                                         <b>COMPROBANTE</b>
                                 
@@ -172,8 +169,8 @@
                     </tr>
                 </thead>
               </table>
-              <table style=" border:1px solid #A4A4A4;; width:100%;color:black;" >
-                  <tr style="background-color:#A4A4A4; color:white;" >
+              <table style=" border:1px solid #A4A4A4;; width:100%;color:black;">
+                  <tr style="background-color:#A4A4A4; color:white;">
                     <td style=" font-size:8pt;font-size:bold; font-weight:900;font-family: sans-serif; padding-left:5px;margin-left:25px; width:60%">
                       <b>VENDIDO A:</b>
                     </td>
@@ -182,7 +179,7 @@
                     <td style=" font-size:8pt;font-size:bold; font-weight:900;font-family: sans-serif; width:30%">
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; padding-left:5px;margin-left:25px; width:60%">
                        <span t-raw="'%s &lt;br&gt;' % o.partner_id.parent_id.name if o.partner_id.parent_id else o.partner_id.name"/>
                     </td>
@@ -191,7 +188,7 @@
                     <td style=" font-size:8pt;font-style:normal; font-weight:900; font-family: sans-serif;width:30%">
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; padding-left:5px;margin-left:25px; width:60%">
                         <span t-field="o.partner_id.street"/>
                         <span t-if="o.partner_id.l10n_mx_street3"> No.Ext. <span t-field="o.partner_id.l10n_mx_street3"/></span>
@@ -204,7 +201,7 @@
                       <span t-field="o.partner_id.ref"/>
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; padding-left:5px;margin-left:25px; width:60%">
                         <span>Colonia</span>
                        <span t-raw="'%s &lt;br&gt;' % o.partner_id.parent_id.l10n_mx_city2 if o.partner_id.parent_id else o.partner_id.l10n_mx_city2"/>
@@ -217,7 +214,7 @@
                       <span t-field="o.sale_order_ids.nopurchase"/>
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td style=" font-size:8pt;font-style:normal; font-weight:normal; font-family: sans-serif;padding-left:5px;margin-left:25px; width:60%">
                        <span t-if="o.partner_id.city">
                        <span t-field="o.partner_id.city"/>,
@@ -234,7 +231,7 @@
                       <span t-field="o.partner_id.user_id.name"/>
                     </td>
                   </tr>
-                  <tr >
+                  <tr>
                     <td style=" font-size:8pt;font-style:normal; font-weight:normal; font-family: sans-serif;padding-left:5px;margin-left:25px; width:60%">
                        <span t-if="o.partner_id.phone">
                           <span>Tel.</span> <span t-field="o.partner_id.phone"/>
@@ -251,7 +248,7 @@
                       <span t-field="o.origin"/>
                     </td>
                   </tr>
-                   <tr >
+                   <tr>
                     <td style=" font-size:8pt;font-style:normal; font-weight:normal; font-family: sans-serif;padding-left:5px;margin-left:25px; width:60%">
                        <span t-if="o.partner_id.vat_split">
                           <span>RFC: </span> <span t-field="o.partner_id.vat_split"/>
@@ -265,41 +262,47 @@
                   </tr>
               </table>
 
-              <table border="1px solid black" style="border:1px solid gray;font-family: sans-serif; "  cellspacing="0" cellpadding="0" width="100%">
+              <table border="1px solid black" style="border:1px solid gray;font-family: sans-serif; " cellspacing="0" cellpadding="0" width="100%">
                 
-                    <tr style="background-color:#A4A4A4; color:white; font-size:8pt; border-right:1px solid white;" >
+                    <tr style="background-color:#A4A4A4; color:white; font-size:8pt; border-right:1px solid white;">
                         <th style="width:5%; text-align:center;  border-right:1px solid white;">CANTIDAD</th>
                          <th style="width:5%;text-align:center; border-right:1px solid white;">UNIDAD MEDIDA</th>
-                        <th style="width:12%;text-align:center; border-right:1px solid white;">CLAVE</th>
-                        <th style="width:52%;text-align:center; border-right:1px solid white;">DESCRIPCIÓN</th>
+                        <th style="width:13%;text-align:center; border-right:1px solid white;">CLAVE</th>
+                        <th style="width:54%;text-align:center; border-right:1px solid white;">DESCRIPCIÓN</th>
                         <th style="width:8%; text-align:center; border-right:1px solid white;">PRECIO UNITARIO</th>
-                        <th style="width:8%; text-align:center; border-right:1px solid white;">DESCTO.</th>
-                        <th style="width:10%;text-align:center; border-right:1px solid white;">IMPORTE</th>
+                        <th style="width:5%; text-align:center; border-right:1px solid white;">DESCTO.</th>
+                        <th style="width:8%;text-align:center; border-right:1px solid white;">IMPORTE</th>
                     </tr>
                                 
                 <tbody class="invoice_tbody" style="  font-size:8pt;font-family: sans-serif;">
                     <tr t-foreach="o.invoice_line_ids" t-as="l" style=" border-right:1px solid black;">
-                      <t  t-if="l.is_discount ==False">
+                      <t t-if="l.is_discount ==False">
                         <td style="text-align:center; border-right:1px solid black; border-right:1px solid black; border-right:1px solid black;">
                           <span t-field="l.quantity"/>
                         </td>
                         <td style="text-align:center;border-right:1px solid black; border-right:1px solid black;">
-                          <span t-field="l.uom_id"/>
+                         <span t-field="l.uom_id.sat_uom_id.name"/> 
+                         <br/>
+                         <span t-field="l.uom_id.sat_uom_id.code" style="  font-size:6pt;font-family: sans-serif;"/>
                         </td>
                         <td style="text-align:center;border-right:1px solid black; border-right:1px solid black; border-right:1px solid black;">
-                          <span t-field="l.product_id.default_code"/>
+                         <span t-field="l.product_id.default_code"/> 
+                         <br/>
+                         <span t-field="l.product_id.sat_product_id.code" style="  font-size:6pt;font-family: sans-serif;"/>
                         </td>
                         <td style=" border-right:1px solid black;">
                           <!--<span t-field="l.product_id.name"/>-->
                           <span t-field="l.name"/>
+                          <br/>
                           <span t-if="l.import_ids">
                           <t t-foreach="l.import_ids" t-as="t">
-                             <span t-field="t.customs"/>
-                             <span t-field="t.date"/>
-                              <span t-field="t.name"/>
+                             <!--<span t-field="t.customs"/>
+                             <span t-field="t.date"/> -->
+                              <span name="No. Pedimento: " style="  font-size:6pt;font-family: sans-serif;" >No. Pedimento: </span> <span/> <span t-field="t.name" style="  font-size:6pt;font-family: sans-serif;"/>
                           </t>  
                           <span t-if="l.serie">
-                            Serie: <span t-field="l.serie"/>
+                           <br/>
+                           <span name="No. Serie: " style="  font-size:6pt;font-family: sans-serif;" >No. Serie: </span> <span t-field="l.serie" style="  font-size:6pt;font-family: sans-serif;"/>
                         </span> 
                         </span>
 
@@ -310,117 +313,126 @@
                       </td>
                       <td style="border-right:1px solid black;text-align:right;"> <span t-field="l.discount"/> % </td>
                       <td style="text-align:center; border-right:1px solid black;">
-                        <span t-field="l.price_subtotal" t-field-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                        <span t-field="l.price_subtotal" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: o.currency_id}"/>
                       </td>
                       </t> 
                     </tr>
                 </tbody>
             </table>
-            <table style=" border:0px solid white; width:100%;" >
-                    <tr >
+            <table style=" border:0px solid white; width:100%;border:1px solid gray; ">
+                    <tr style="border-right:1px solid gray;">
 
-                        <td  style="width:75%; height:10%;">
-                           <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;" >
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; ">
+                        <td style="width:70%;border-right:1px solid gray;">
+                           <table style=" border:0px solid white; width:100%;padding-left:5px;margin-left:5px;height:100%;">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; ">
                                   <b>Condiciones de Pago: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                <td style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
                                    <span t-raw="'%s &lt;br&gt;' % o.payment_term_id and o.payment_term_id.name or 'Contado'"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
                                   <b>Método de Pago: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; padding-left:5px;margin-left:5px; ">
-                                   <span t-field="o.forma_pago"/>
+                                <td style="font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; padding-left:5px;margin-left:5px; ">
+                                   [<span t-field="o.metodo_pago_id.code"/>] <span t-field="o.metodo_pago_id.name"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
                                   <b>Forma de Pago: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
-                                    <span t-raw="'%s &lt;br&gt;' % o.pay_method_ids and ','.join([x.code for x in o.pay_method_ids]) or o.pay_method_id.code or '99'"/>
+                                <td style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                    [<span t-raw="'%s &lt;br&gt;' % o.pay_method_ids and ','.join([x.code for x in o.pay_method_ids]) or o.pay_method_id.code or '99'"/>]
                                     <span t-raw="'%s &lt;br&gt;' % o.pay_method_ids and ','.join([x.name for x in o.pay_method_ids]) or 'Otros'"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; ">
                                   <b>Cuenta de Pago: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                <td style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
                                     <span t-raw="'%s &lt;br&gt;' % o.acc_payment and o.acc_payment.last_acc_number or 'N/A'"/>
                                 </td>
                              </tr>
+                              <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; ">
+                                  <b>Uso de CFDI: </b>
+                                </td>
+                                <td style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal; padding-left:5px;margin-left:5px; ">
+                                    [<span t-field="o.uso_cfdi_id.code"/>] <span t-field="o.uso_cfdi_id.name"/>
+                                </td>
+                             </tr>
+
+
                             </table>
 
                         </td>
-                        <td  style="width:25%;padding-left:5px;margin-left:5px; height:10%; ">
-                           <table style=" border:1px solid gray; width:100%;padding-right:5px;margin-right:5px; height:100%;" >
-                              <tr >
+                        <td style="width:30%;padding-left:5px;margin-left:5px; ">
+                           <table style=" border:0px solid white; width:100%;padding-right:5px;margin-right:5px; height:100%;">
+                              <tr>
                                    <td style="font-size:8pt;font-family: sans-serif;"><span>Suma</span></td>
                                   <td class="text-right" style="font-size:8pt;font-family: sans-serif;">
                                       $<span t-field="o.suma"/>
                                   </td>
                               </tr>
-                              <tr >
+                              <tr>
                                    <td style="font-size:8pt;font-family: sans-serif;"><span>Descuento</span></td>
                                   <td class="text-right" style="font-size:7pt;font-family: sans-serif;">
                                       $<span t-field="o.discount_rate"/>
                                   </td>
                               </tr>
-                              <tr >
+                              <tr>
                               <td style="font-size:8pt;font-family: sans-serif;"><span>SubTotal</span></td>
                               <td class="text-right" style="font-size:8pt;font-family: sans-serif;">
-                                  <span t-field="o.amount_untaxed" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                  <span t-field="o.amount_untaxed" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
                               </td>
                               </tr>
-                              <tr t-foreach="o.tax_line_ids" t-as="t" >
+                              <tr t-foreach="o.tax_line_ids" t-as="t">
                                   <td style="font-size:8pt;font-family: sans-serif;"><span t-field="t.tax_id.description"/></td>
                                   <td class="text-right" style="font-size:7pt;font-family: sans-serif;">
-                                      <span t-field="t.abs_amount"
-                                          t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                      <span t-field="t.abs_amount" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
                                   </td>
                               </tr>
 
-                              <tr >
+                              <tr>
                                   <td style="font-size:8pt;font-family: sans-serif;"><b>Total <span t-field="o.currency_id.name"/> </b> </td>
                                   <td class="text-right" style="font-size:8pt;font-family: sans-serif;">
-                                       <span t-field="o.amount_total" t-field-options='{"widget": "monetary", "display_currency": "o.currency_id"}'/>
+                                       <span t-field="o.amount_total" t-field-options="{&quot;widget&quot;: &quot;monetary&quot;, &quot;display_currency&quot;: &quot;o.currency_id&quot;}"/>
                                   </td>
                               </tr>
                             </table>
-                          
+
                         </td>
                   </tr>
             </table>
           <div style="text-align:center;font-size:8pt;font-family: sans-serif;">
               <span>***</span><span t-field="o.amount_to_text"/>
-            </div> 
-            <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;" >
+            </div>
+            <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;">
                              <tr style="background-color:#A4A4A4; color:white;">
-                                <td  style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal;width:10%; ">
+                                <td style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal;width:10%; ">
                                   <b>DATOS ENVIO </b>
                                 </td>
                                 <td style="width:80%;">
                                 </td>
-                                
+
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
                                   <b>Transporte: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;">
+                                <td style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;">
                                    <span t-field="o.sale_order_ids.carrier_id.name"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
                                   <b>Domicilio de entrega:</b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;  ">
+                                <td style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;  ">
                                      <span t-field="o.partner_shipping_id.street"/>
                                                         <span t-if="o.partner_shipping_id.l10n_mx_street3"> No.Ext. <span t-field="o.partner_shipping_id.l10n_mx_street3"/></span>
                                                         <span t-if="o.partner_shipping_id.l10n_mx_street4"> No.Int. <span t-field="o.partner_shipping_id.l10n_mx_street4"/> </span><br/>
@@ -435,51 +447,51 @@
                                                          </span>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
                                   <b>Destino: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal;  ">
+                                <td style="font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:normal;  ">
                                     <span t-field="o.delivery_id"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal; ">
                                   <b>Guia: </b>
                                 </td>
-                                <td  style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;  ">
-                                    
+                                <td style="font-size:8pt;font-style:normal;font-family: sans-serif; font-weight:normal;  ">
+
                                 </td>
                              </tr>
              </table> <br/>
-              <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;" >
-                             <tr >
-                                <td  style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
+              <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;">
+                             <tr>
+                                <td style=" font-size:8pt;font-style:normal; font-weight:normal;font-family: sans-serif; ">
                                   <span>*TODA DEVOLUCIÓN Y/O CANCELACIÓN TENDRA UN CARGO DEL 15% *ENVIOS DE MERCANCIA CORREN POR CUENTA Y RIESGO DEL CLIENTE <br/>
                                   *FACTURAS EN DOLARES DEBERAN SER PAGADAS AL T/C BANCARIO AL DIA DE PAGO<br/>
                                EFECTOS FISCALES AL PAGO. </span><br/>
                                 <b>Regimen Fiscal: </b><span t-field="o.company_emitter_id.partner_id.regimen_fiscal_id.name"/>
                                 </td>
-                               
-                                
+
+
                              </tr>
-                             
+
              </table><br/>
-             <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;" >
+             <table style=" border:1px solid gray; width:100%;padding-left:5px;margin-left:5px;height:100%;">
                              <tr style="background-color:#A4A4A4; color:white;">
-                                <td  style=" font-size:8pt;font-style:normal; font-weight:900;font-family: sans-serif; ">
+                                <td style=" font-size:8pt;font-style:normal; font-weight:900;font-family: sans-serif; ">
                                   <b>ṔAGARÉ</b>
                                 </td>
                                </tr>
                                 <tr>
-                                <td  style=" font-size:6pt;font-style:normal;font-family: sans-serif;">
+                                <td style=" font-size:6pt;font-style:normal;font-family: sans-serif;">
                                   <span>DEBO Y PAGARE INCONDICIONALMENTE A LA ORDEN DE DISTRIBUIDORA DE HERRAMIENTAS UNICORNIO S.A.P.I DE C.V. EL DIA </span><span t-field="o.invoice_datetime"/><span> EN LA CIUDAD DE GUADALAJARA JALISCO O DONDE ELIJA EL TENEDOR LA CANTIDAD ARRIBA DESCRITA, MERCANCIA QUE HE RECIBIDO A MI ENTERA SATISFACCION, SI NO FUERE CUBIERTA DICHA CANTIDAD PRECISAMENTE EL DIA DE SU VENCIMIENTO, PAGARE INTERESES MORATORIOS AL 5% MENSUAL, DESDE LA FECHA DE SU VENCIMIENTO. ESTE PAGARE ES MERCANTIL Y ESTA REGIDO POR LA LEY GENERAL DE TITULOS Y OPERACIONES DE CREDITO EN SU ARTICULO 150,151,173 Y 174 PARTE FINAL Y DEMAS CORRELATIVOS POR NO SER PAGARE DOMICILIADO.</span><br/><br/>
                                   <span style="color:white">----------------</span>
                                   <span style="text-align:center;color:black;font-family: sans-serif;">FIRMA DE RECIBIDO Y CONFORMIDAD______________________________________________________</span><br/>
                                 </td>
-                                
+
                              </tr>
-                             
+
              </table><br/>
              <table style="font-size:8pt; border:0px solid white; width:100%;">
                 <tr style="width:8%;">
@@ -492,88 +504,82 @@
                                 <td style=" font-size:8pt;font-style:normal; font-weight:normal; font-family: sans-serif; width:60%;">
                                   <b>INFO CFDI</b>
                                 </td>
-                                <td  style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:900;width:40%; ">
+                                <td style=" font-size:8pt;font-style:normal; font-family: sans-serif;font-weight:900;width:40%; ">
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
                                   <b>Lugar de Expedición </b>
-                                   <span t-field="o.company_emitter_id.partner_id.city"/>,
-                                   <span t-field="o.company_emitter_id.partner_id.state_id.name"/>,
+                                   <!--<span t-field="o.company_emitter_id.partner_id.city"/>,
+                                   <span t-field="o.company_emitter_id.partner_id.state_id.name"/>, -->
                                    <span t-field="o.company_emitter_id.partner_id.zip"/>
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal; font-weight:normal;font-family: sans-serif; width:40%;">
-                                 
+                                <td style=" font-size:7pt;font-style:normal; font-weight:normal;font-family: sans-serif; width:40%;">
+
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:60%;">
-                                  <b>Fecha/Hora Expedición:</b> <span t-field="o.invoice_datetime"/>
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:60%;">
+                                  <b>Fecha/Hora Expedición:</b> <span t-field="o.invoice_datetime" t-options ='{"format": "yyyy-MM-ddTHH:mm:ss"}' />
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:40%;">
+                                <td style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:40%;">
                                   <b>Moneda:</b><span t-field="o.currency_id.name"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
-                                  <b > Num Serie de Certificado </b><span t-field="o.no_certificado"/>
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
+                                  <b> Num Serie de Certificado </b><span t-field="o.journal_id.serial_number"/>
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:40%;">
+                                <td style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:40%;">
                                   <b>T/C informativo:</b><span t-field="o.currency_id.rate2"/>
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:900; width:60%;">
-                                 
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:900; width:60%;">
+
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:900; width:40%;">
+                                <td style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:900; width:40%;">
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:normal; width:60%;">
                                   <b>Timbrado</b><br/>
                                   <b>Folio Fiscal</b><span t-field="o.cfdi_folio_fiscal"/>
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal; font-weight:900; width:40%;">
+                                <td style=" font-size:7pt;font-style:normal; font-weight:900; width:40%;">
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:60%;">
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal; font-family: sans-serif;font-weight:normal; width:60%;">
                                   <b>Num Serie Certificado SAT:</b><span t-field="o.cfdi_no_certificado"/>
                                 </td>
-                                <td  style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:900; width:40%;">
+                                <td style=" font-size:7pt;font-style:normal;font-family: sans-serif; font-weight:900; width:40%;">
                                 </td>
                              </tr>
-                             <tr >
-                                <td  style=" font-size:7pt;font-style:normal; font-weight:normal; width:60%;">
-                                  <b>Fecha/Hora de Certificación:</b><span t-field="o.cfdi_fecha_timbrado"/>
+                             <tr>
+                                <td style=" font-size:7pt;font-style:normal; font-weight:normal; width:60%;">
+                                  <b>Fecha/Hora de Certificación:</b><span t-field="o.cfdi_fecha_timbrado" t-options ='{"format": "yyyy-MM-ddTHH:mm:ss"}'/>
                                 </td>
-                                <td  style=" font-size:6pt;font-style:normal; font-weight:900; width:40%;">
+                                <td style=" font-size:6pt;font-style:normal; font-weight:900; width:40%;">
                                 </td>
                              </tr>
-                            
+
                        </table>
                     </td>
                 </tr>
-                
+
             </table>
              <div style="text-align:center;font-size:7pt;font-family: sans-serif;">
-              <span>ESTE DOCUMENTO ES UNA REPRESENTACION IMPRESA DE UN CFDI</span>
-            </div> 
+              <span>ESTE DOCUMENTO ES UNA REPRESENTACION IMPRESA DE UN CFDI 3.3</span>
+            </div>
             <div style="text-align:left;font-size:6pt;font-family: sans-serif;">
                Cadena Original del complemento de certificación digital del SAT:<BR/>
                <span t-field="o.cfdi_cadena_original" style="display:block;width:500px;word-wrap:break-word;"/><br/>
                 Sello Digital del CFDI:<BR/><span t-field="o.sello" style="display:block;width:500px;word-wrap:break-word;"/><br/>
                 Sello Digital SAT:<BR/><span t-field="o.cfdi_sello" style="display:block;width:500px;word-wrap:break-word;"/>
             </div>
-
-
-                
+    
             </div>
             </t>
         </t>
-    </template>
-
-
-
-</odoo>
+    </t>
