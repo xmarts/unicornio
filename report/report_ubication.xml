@@ -1,19 +1,17 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<odoo>
-
-    <template id="report_ubication_document">
+<?xml version="1.0"?>
+<t t-name="unicornio.report_ubication_document">
         <t t-call="report.html_container">
             <t t-call="unicornio.external_layout_ubication">
-                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})" />
+                <t t-set="o" t-value="o.with_context({'lang':o.partner_id.lang})"/>
                 <div class="page">
                     <t t-if="not o and doc">
                         <t t-set="o" t-value="doc"/>
                     </t>
                     <t t-if="o and 'company_id' in o">
-                        <t t-set="company" t-value="o.company_id"></t>
+                        <t t-set="company" t-value="o.company_id"/>
                     </t>
                     <t t-if="not o or not 'company_id' in o">
-                        <t t-set="company" t-value="res_company"></t>
+                        <t t-set="company" t-value="res_company"/>
                     </t>
 
                         <div class="col-xs-3">
@@ -23,33 +21,29 @@
 
                 <div class="row zero_min_height">
                     <div class="col-xs-12">
-                        <div style="
-                        border-bottom: 1px solid black;"></div>
+                        <div style="                         border-bottom: 1px solid black;"/>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-6" name="company_address">
-                        <span t-field="company.partner_id"
-                            t-field-options='{"widget": "contact", "fields": ["address", "name"], "no_marker": true}'
-                            style="border-bottom: 1px solid black; display:inline-block;"/>
+                        <span t-field="company.partner_id" t-field-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;], &quot;no_marker&quot;: true}" style="border-bottom: 1px solid black; display:inline-block;"/>
                     </div>
                 </div>
-                    <div class="row" >
+                    <div class="row">
                         <br/>
-                        <div  style="padding-left:5px;margin-left:8px;">
+                        <div style="padding-left:5px;margin-left:8px;">
                             <div>
                                 <span><strong>Dirección Cliente:</strong></span>
                             </div>
                             <div t-if="o.partner_id" name="partner_header">
-                                <div t-field="o.partner_id"
-                                   t-options='{"widget": "contact", "fields": ["address", "name", "phone", "fax"], "no_marker": True}'/>
+                                <div t-field="o.partner_id" t-options="{&quot;widget&quot;: &quot;contact&quot;, &quot;fields&quot;: [&quot;address&quot;, &quot;name&quot;, &quot;phone&quot;, &quot;fax&quot;], &quot;no_marker&quot;: True}"/>
                             </div>
                         </div>
 
 
-                        <div  style="padding-left:5px;margin-left:8px;">
+                        <div style="padding-left:5px;margin-left:8px;">
                             <div>
-                                <span><strong>Comercial:</strong>  <span t-field="o.partner_id.user_id.name"/>  </span>
+                                <span><strong>Comercial:</strong>  <span t-field="o.sale_id.user_id.name"/>  </span>
                             </div>
                             <div>
                                 <span><strong>Tipo de Entrega:</strong>  <span t-field="o.sale_id.delivery"/>  </span>
@@ -68,7 +62,7 @@
                                 <th name="td_sched_date_h">
                                     <strong>Fecha</strong>
                                 </th>
-                                <th ><strong>Descripción</strong></th>
+                                <th><strong>Descripción</strong></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -137,20 +131,47 @@
                         </thead>
                         <tbody>
                             <tr t-foreach="o.pack_operation_ids" t-as="pack_operation">
-                                <td>
+                                <td >
+                                   <t t-if="pack_operation.product_id.default_code">
                                     <span t-field="pack_operation.product_id.default_code"/>
+                                    </t>
+                                    <t t-else="pack_operation.product_id.default_code">
+                                      <span t-field="pack_operation.linked_move_operation_ids.move_id.product_id.default_code"/> 
+                                     </t>
                                 </td>
                                 <td>
-                                    <span t-field="pack_operation.product_id.name"/>
+                                   <t t-if="pack_operation.product_id.name">
+                                     <span t-field="pack_operation.product_id.name"/>
+                                    </t>
+                                    <t t-else="pack_operation.product_id.name">
+                                      <span t-field="pack_operation.linked_move_operation_ids.move_id.product_id.name"/> 
+                                    </t>
                                 </td>
                                 <td>
-                                    <span t-field="pack_operation.qty_stock"/>
+                                    <t t-if="pack_operation.product_id.default_code">
+                                      <span t-field="pack_operation.qty_stock"/>
+                                    </t>
+                                    <t t-else="pack_operation.product_id.default_code">
+                                        <span t-field="pack_operation.linked_move_operation_ids.move_id.qty_stock"/> 
+                                    </t>
                                 </td>
                                 <td>
-                                    <span t-field="pack_operation.product_qty"/>
+                                    
+                                    <t t-if="pack_operation.product_id.default_code">
+                                      <span t-field="pack_operation.product_qty"/>
+                                    </t>
+                                    <t t-else="pack_operation.product_id.default_code">
+                                        <span t-field="pack_operation.linked_move_operation_ids.move_id.product_uom_qty"/> 
+                                    </t>
+                                    
                                 </td>
                                 <td>
-                                    <span t-field="pack_operation.product_id.ubicationinfo_id"/>
+                                    <t t-if="pack_operation.product_id.ubicationinfo_id">
+                                     <span t-field="pack_operation.product_id.ubicationinfo_id"/>
+                                    </t>
+                                    <t t-else="pack_operation.product_id.ubicationinfo_id">
+                                      <span t-field="pack_operation.linked_move_operation_ids.move_id.product_id.ubicationinfo_id"/>
+                                    </t>
                                 </td>
                                 
                             </tr>
@@ -161,24 +182,4 @@
                 </div>
             </t>
          </t>
-    </template>
-
-    <template id="report_ubication">
-        <t t-foreach="docs" t-as="o">
-            <t t-call="unicornio.report_ubication_document" t-lang="o.partner_id.lang"/>
-        </t>
-    </template>
-
-
-
-<report
-            string="Reporte con Ubicaciones"
-            id="action_report_ubication"
-            model="stock.picking"
-            report_type="qweb-pdf"
-            name="unicornio.report_ubication"
-            file="unicornio.report_ubication"
-            paperformat="unicornio.paperformat_reportesuni"
-
-/>
-</odoo>
+    </t>

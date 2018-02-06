@@ -248,12 +248,12 @@ class Unicornio_Salerouteline(models.Model):
   		if self.delivered == True:
   			invoice_obj = self.env['account.invoice']
   			invoiceid = invoice_obj.search([('id', '=', self.invoice_id.id)])
-			#_logger.info(_("ID de venta: \n%d") % (invoiceid))
+			#_logger.info(_("ID de enta: \n%d") % (invoiceid))
 			#partner_obj = self.pool.get ( 'res.partner') 
 			invoiceid.write ({ 'delivered': True})
 			sale_obj = self.env['sale.order']
 			idsale = sale_obj.search([('name', '=', invoiceid.origin)])
-			#_logger.info(_("ID de venta: \n%d") % (idsale))
+			#_logger.info(_("ID de ventva: \n%d") % (idsale))
 			idsale.write ({ 'delivered': True})
 
 class Unicornio_SaleOrder(models.Model):
